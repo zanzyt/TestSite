@@ -52,3 +52,26 @@ document.getElementById('logout-link')?.addEventListener('click', () => {
         window.location.href = 'login.html'; // Redirect to login page
     });
 });
+
+// Function to fetch data from the backend
+async function fetchData() {
+    try {
+        const response = await fetch('http://localhost:3000/data'); // URL to your backend API
+        const data = await response.json();
+        console.log(data); // Log data to console for debugging
+        displayData(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+// Function to display data on the page
+function displayData(data) {
+    const container = document.getElementById('data-container');
+    if (container) {
+        container.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    }
+}
+
+// Call fetchData on page load
+window.onload = fetchData;
