@@ -3,34 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель управления - Secret Hub</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Dashboard</title>
+    <!-- Firebase Configuration and Initialization -->
+    <script defer src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script defer src="auth.js"></script>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: Include your CSS file for styling -->
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">Secret Hub</div>
             <ul class="nav-links">
-                <li><a href="dashboard.html">Главная</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#services">Услуги</a></li>
-                <li><a href="#contact">Контакты</a></li>
-                <li><a href="#" id="logout-link">Выйти</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero-section">
-        <h1>Добро пожаловать в Панель управления</h1>
-        <p>Вы вошли в систему. Здесь вы можете публиковать и загружать контент.</p>
-    </section>
+    <main>
+        <h1>Dashboard</h1>
+        <button id="logout-link">Logout</button>
+        <div id="data-container"></div> <!-- Container for displaying data -->
+    </main>
 
     <footer>
-        <p>&copy; 2024 Secret Hub. Все права защищены.</p>
+        <p>&copy; 2024 Secret Hub. All rights reserved.</p>
     </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
