@@ -1,4 +1,4 @@
-// Инициализация Firebase
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_AUTH_DOMAIN",
@@ -9,11 +9,12 @@ const firebaseConfig = {
     measurementId: "YOUR_MEASUREMENT_ID"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Регистрация пользователя
-document.getElementById('register-form').addEventListener('submit', (e) => {
+// Registration
+document.getElementById('register-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const email = document.getElementById('reg-email').value;
@@ -22,15 +23,15 @@ document.getElementById('register-form').addEventListener('submit', (e) => {
     auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
             alert('Регистрация успешна!');
-            window.location.href = 'dashboard.html'; // Переход в панель управления
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
         })
         .catch((error) => {
             alert('Ошибка при регистрации: ' + error.message);
         });
 });
 
-// Вход пользователя
-document.getElementById('login-form').addEventListener('submit', (e) => {
+// Login
+document.getElementById('login-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const email = document.getElementById('email').value;
@@ -38,16 +39,16 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
 
     auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-            window.location.href = 'dashboard.html'; // Переход в панель управления
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
         })
         .catch((error) => {
             alert('Ошибка при входе: ' + error.message);
         });
 });
 
-// Выход пользователя
-document.getElementById('logout-link').addEventListener('click', () => {
+// Logout
+document.getElementById('logout-link')?.addEventListener('click', () => {
     auth.signOut().then(() => {
-        window.location.href = 'login.html'; // Возврат на страницу входа
+        window.location.href = 'login.html'; // Redirect to login page
     });
 });
