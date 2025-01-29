@@ -21,10 +21,6 @@ body.light-mode {
 body.dark-mode {
     background: linear-gradient(135deg, #333, #444, #555);
     color: #ddd;
-    background-image: url('https://i.imgur.com/dM94Tmo.png'); /* Moon & Star */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 
 /* Theme Toggle Buttons */
@@ -36,23 +32,36 @@ body.dark-mode {
     right: 20px;
 }
 
-.theme-buttons button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+/* Sun and Moon Toggle Buttons */
+.theme-toggle {
     width: 50px;
     height: 50px;
-    transition: transform 0.3s ease;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
 }
 
-.theme-buttons button:hover {
+/* Sun Styling */
+.sun {
+    background: yellow;
+    box-shadow: 0 0 20px yellow;
+    transition: all 0.3s ease;
+}
+
+.sun:hover {
     transform: scale(1.2);
 }
 
-/* Theme Icons */
-.theme-icon {
-    width: 100%;
-    transition: opacity 0.3s ease;
+/* Moon Styling */
+.moon {
+    background: #ddd;
+    box-shadow: inset -8px -8px 0px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.moon:hover {
+    transform: scale(1.2);
 }
 
 /* Container Styling */
