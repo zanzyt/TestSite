@@ -13,6 +13,13 @@ body {
     animation: gradient 10s ease infinite;
     color: white;
     overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: linear-gradient(135deg, #333, #444, #555);
+    color: #ddd;
 }
 
 @keyframes gradient {
@@ -99,7 +106,7 @@ p {
 }
 
 /* Redirect Button */
-.redirect-btn {
+.redirect-btn, .social-btn {
     background-color: #ff5733;
     padding: 12px 24px;
     border-radius: 5px;
@@ -108,11 +115,55 @@ p {
     font-size: 1.2em;
     margin-top: 20px;
     transition: background-color 0.3s, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.redirect-btn:hover {
+.redirect-btn:hover, .social-btn:hover {
     background-color: #c14e27;
     transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Social Media Buttons */
+.social-btns {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.social-btn {
+    background-color: #7289da; /* Discord Color */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.social-btn:hover {
+    transform: scale(1.2);
+}
+
+.social-btn.github {
+    background-color: #24292f; /* GitHub Color */
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background-color: #ff5733;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2em;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background-color: #c14e27;
 }
 
 /* Custom Scrollbar */
