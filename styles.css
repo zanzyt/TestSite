@@ -8,24 +8,98 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode */
+body.light-mode {
     background: linear-gradient(135deg, #667eea, #764ba2, #ff5733);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-    color: white;
-    overflow: hidden;
-    transition: background 0.3s ease;
-    background-image: url('https://i.imgur.com/PqSoikB.png'); /* Light mode background */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    color: black;
 }
 
 /* Dark Mode */
 body.dark-mode {
     background: linear-gradient(135deg, #333, #444, #555);
     color: #ddd;
-    background-image: url('https://i.imgur.com/dM94Tmo.png'); /* Dark mode background */
+    background-image: url('https://i.imgur.com/dM94Tmo.png'); /* Moon & Star */
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+/* Theme Toggle Buttons */
+.theme-buttons {
+    display: flex;
+    gap: 15px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.theme-buttons button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.theme-buttons button:hover {
+    transform: scale(1.2);
+}
+
+/* Theme Icons */
+.theme-icon {
+    width: 100%;
+    transition: opacity 0.3s ease;
+}
+
+/* Container Styling */
+.container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Heading */
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* IP Address */
+p {
+    font-size: 1.2em;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
 }
