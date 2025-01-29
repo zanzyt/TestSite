@@ -17,9 +17,14 @@ body {
 }
 
 /* Dark Mode */
+/* Dark Mode */
 body.dark-mode {
     background: linear-gradient(135deg, #333, #444, #555);
     color: #ddd;
+    background-image: url('https://i.imgur.com/dM94Tmo.png'); /* Use the direct image URL */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 @keyframes gradient {
