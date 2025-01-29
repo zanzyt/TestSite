@@ -6,7 +6,18 @@
     <title>Welcome to My Site</title>
     <link rel="stylesheet" href="styles.css"> <!-- External CSS link -->
 </head>
-<body>
+<body class="light-mode">
+    <!-- Theme Toggle Buttons -->
+    <div class="theme-buttons">
+        <button id="light-mode-btn">
+            <img src="https://i.imgur.com/YjZXwWx.png" alt="Light Mode" class="theme-icon">
+        </button>
+
+        <button id="dark-mode-btn">
+            <img src="https://i.imgur.com/dM94Tmo.png" alt="Dark Mode" class="theme-icon">
+        </button>
+    </div>
+
     <div class="container">
         <h1>Welcome to My Site</h1>
         <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
@@ -26,38 +37,11 @@
         <a href="https://github.com" class="social-btn github" target="_blank">G</a>
     </div>
 
-       <!-- Theme Toggle Buttons -->
-    <div class="theme-buttons">
-        <button id="light-mode-btn">
-            <img src="https://i.imgur.com/YjZXwWx.png" alt="Light Mode" class="theme-icon">
-        </button>
-
-        <button id="dark-mode-btn">
-            <img src="https://i.imgur.com/dM94Tmo.png" alt="Dark Mode" class="theme-icon">
-        </button>
-    </div>
-    
     <a href="https://fakecrime.bio/zanzyt" class="redirect-btn" target="_blank">Visit Fake Crime Bio</a>
-
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
 
     <!-- Footer -->
     <div class="footer">Made with ❤️</div>
-    <script src="script.js"></script>
-    <script>
-        fetch('https://api64.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ip-address').textContent = data.ip;
-            })
-            .catch(error => {
-                document.getElementById('ip-address').textContent = 'Unable to fetch IP';
-            });
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
