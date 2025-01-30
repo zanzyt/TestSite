@@ -75,6 +75,11 @@ p {
     cursor: pointer;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #fff;
 }
 
 /* Sun and Moon Styling */
