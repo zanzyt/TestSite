@@ -1,16 +1,44 @@
-// Theme Toggle
+// Check for the user's stored theme in localStorage and apply it
+const body = document.body;
 const lightModeBtn = document.getElementById('light-mode-btn');
 const darkModeBtn = document.getElementById('dark-mode-btn');
-const body = document.body;  
+const cookiesConsentBanner = document.getElementById('cookies-consent');
 
+// Check if the user has accepted cookies
+if (localStorage.getItem('cookiesAccepted') === 'true') {
+    // Apply the theme from localStorage
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        body.classList.remove('light-mode');
+    } else {
+        body.classList.add('light-mode');
+        body.classList.remove('dark-mode');
+    }
+}
+
+// Theme Toggle Event Listeners
 lightModeBtn.addEventListener('click', () => {
     body.classList.remove('dark-mode');
     body.classList.add('light-mode');
+    if (cookiesConsentBanner.style.display !== 'none') {
+        localStorage.setItem('theme', 'light');
+    }
 });
 
 darkModeBtn.addEventListener('click', () => {
     body.classList.remove('light-mode');
     body.classList.add('dark-mode');
+    if (cookiesConsentBanner.style.display !== 'none') {
+        localStorage.setItem('theme', 'dark');
+    }
+});
+
+// Cookie consent handling
+const acceptCookiesBtn = document.getElementById('accept-cookies');
+acceptCookiesBtn.addEventListener('click', () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    cookiesConsentBanner.style.display = 'none';  // Hide the cookies banner
 });
 
 // Fetch IP Address and Location using ipinfo.io
