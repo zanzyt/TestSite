@@ -1,7 +1,7 @@
 // Theme Toggle
 const lightModeBtn = document.getElementById('light-mode-btn');
 const darkModeBtn = document.getElementById('dark-mode-btn');
-const body = document.body;
+const body = document.body;  
 
 lightModeBtn.addEventListener('click', () => {
     body.classList.remove('dark-mode');
@@ -33,15 +33,17 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// Weather API Integration
-const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your API key
-const city = 'London'; // Replace with your city
+// Weather API Integration (Open-Meteo)
+const latitude = 51.5074; // London latitude
+const longitude = -0.1278; // London longitude
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
     .then(response => response.json())
     .then(data => {
-        const weather = document.getElementById('weather');
-        weather.textContent = `${data.main.temp}°C, ${data.weather[0].description}`;
+        const weatherElement = document.getElementById('weather');
+        const cityElement = document.getElementById('city');
+        cityElement.textContent = 'London';
+        weatherElement.textContent = `${data.current_weather.temperature}°C, ${data.current_weather.weathercode}`;
     })
     .catch(() => {
         document.getElementById('weather').textContent = 'Unable to fetch weather';
