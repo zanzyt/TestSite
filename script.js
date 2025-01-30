@@ -13,39 +13,40 @@ darkModeBtn.addEventListener('click', () => {
     body.classList.add('dark-mode');
 });
 
-// Fetch IP Address
-fetch('https://api.ipify.org?format=json')
+// Fetch IP Address and Location
+fetch('https://ip-api.com/json/')
     .then(response => response.json())
     .then(data => {
-        document.getElementById('ip-address').textContent = data.ip;
+        document.getElementById('ip-address').textContent = data.query; // Display IP address
+        const city = data.city;
+        const country = data.country;
+        const latitude = data.lat;
+        const longitude = data.lon;
+
+        document.getElementById('city').textContent = `${city}, ${country}`;
+
+        // Fetch Weather for the user's location
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true`)
+            .then(response => response.json())
+            .then(weatherData => {
+                const currentTemp = weatherData.current_weather.temperature;
+                document.getElementById('weather').textContent = `${currentTemp}°C`;
+            })
+            .catch(() => {
+                document.getElementById('weather').textContent = 'Unable to fetch weather';
+            });
     })
     .catch(() => {
         document.getElementById('ip-address').textContent = 'Unable to fetch IP';
+        document.getElementById('city').textContent = 'Unknown Location';
+        document.getElementById('weather').textContent = 'Unknown Weather';
     });
 
 // Dynamic Clock
 function updateClock() {
     const now = new Date();
-    const clock = document.getElementById('clock');
-    clock.textContent = now.toLocaleTimeString();
+    document.getElementById('clock').textContent = now.toLocaleTimeString();
 }
 
 setInterval(updateClock, 1000);
 updateClock();
-
-// Weather API Integration (Open-Meteo)
-const latitude = 52.52; // Berlin latitude
-const longitude = 13.41; // Berlin longitude
-
-fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`)
-    .then(response => response.json())
-    .then(data => {
-        const weatherElement = document.getElementById('weather');
-        const cityElement = document.getElementById('city');
-        const currentTemp = data.hourly.temperature_2m[0]; // Fetching the first hourly temperature
-        cityElement.textContent = "Berlin"; // You can modify this based on user location
-        weatherElement.textContent = `${currentTemp}°C`;
-    })
-    .catch(() => {
-        document.getElementById('weather').textContent = 'Unable to fetch weather';
-    });
