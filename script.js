@@ -34,16 +34,17 @@ setInterval(updateClock, 1000);
 updateClock();
 
 // Weather API Integration (Open-Meteo)
-const latitude = 51.5074; // London latitude
-const longitude = -0.1278; // London longitude
+const latitude = 52.52; // Berlin latitude
+const longitude = 13.41; // Berlin longitude
 
-fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`)
     .then(response => response.json())
     .then(data => {
         const weatherElement = document.getElementById('weather');
         const cityElement = document.getElementById('city');
-        cityElement.textContent = 'London';
-        weatherElement.textContent = `${data.current_weather.temperature}°C, ${data.current_weather.weathercode}`;
+        const currentTemp = data.hourly.temperature_2m[0]; // Fetching the first hourly temperature
+        cityElement.textContent = "Berlin"; // You can modify this based on user location
+        weatherElement.textContent = `${currentTemp}°C`;
     })
     .catch(() => {
         document.getElementById('weather').textContent = 'Unable to fetch weather';
