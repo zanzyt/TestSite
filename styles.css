@@ -24,6 +24,41 @@ body.dark-mode {
     color: #f0f0f0;
 }
 
+/* Cookie Consent Banner */
+.cookies-consent {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    z-index: 1000;
+}
+
+.cookies-consent button {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.cookies-consent button:hover {
+    background-color: #c14e27;
+}
+
+/* Theme Toggle and other existing styles */
+.sun, .moon {
+    font-size: 2rem;
+}
+
+
 /* Container Styling */
 .container {
     background: rgba(255, 255, 255, 0.1);
