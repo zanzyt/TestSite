@@ -8,7 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 0.5s ease, color 0.5s ease, transform 0.5s ease;
     overflow: hidden;
 }
 
@@ -32,7 +32,7 @@ body.dark-mode {
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     text-align: center;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.5s ease;
     max-width: 400px;
     margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -66,6 +66,7 @@ p {
     top: 20px;
     right: 20px;
     z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease-in-out;
 }
 
 .theme-toggle {
@@ -73,13 +74,18 @@ p {
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease, background 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
     color: #fff;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 /* Sun and Moon Styling */
@@ -189,4 +195,21 @@ p {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
+}
+
+/* Add a smooth transition effect for the theme toggle button */
+@keyframes themeToggleAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.theme-toggle:active {
+    animation: themeToggleAnimation 0.5s ease;
 }
