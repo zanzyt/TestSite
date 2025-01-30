@@ -13,20 +13,19 @@ darkModeBtn.addEventListener('click', () => {
     body.classList.add('dark-mode');
 });
 
-// Fetch IP Address and Location
-fetch('https://ip-api.com/json/')
+// Fetch IP Address and Location using ipinfo.io
+fetch('https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN')  // <-- Replace with your IPInfo token
     .then(response => response.json())
     .then(data => {
-        document.getElementById('ip-address').textContent = data.query; // Display IP address
-        const city = data.city;
-        const country = data.country;
-        const latitude = data.lat;
-        const longitude = data.lon;
+        document.getElementById('ip-address').textContent = data.ip; // Display IP
+        const location = data.city ? `${data.city}, ${data.country}` : "Unknown Location";
+        document.getElementById('city').textContent = location;
 
-        document.getElementById('city').textContent = `${city}, ${country}`;
+        // Extract Latitude and Longitude from "loc" (formatted as "lat,lon")
+        const [latitude, longitude] = data.loc.split(',');
 
         // Fetch Weather for the user's location
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true`)
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
             .then(response => response.json())
             .then(weatherData => {
                 const currentTemp = weatherData.current_weather.temperature;
