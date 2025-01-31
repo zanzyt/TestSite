@@ -3,9 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Portfolio Site</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Enhanced Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS */
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            filter: blur(1px);
+        }
+
+        body.light-mode .particle {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100vw); opacity: 0; }
+        }
+
+        .theme-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle.active i {
+            animation: themeToggleAnimation 0.6s ease;
+        }
+
+        @keyframes themeToggleAnimation {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        .sun { background: #ffeb3b; }
+        .moon { background: #333; }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cookies-consent {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .social-btns {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .redirect-btn {
+            background-color: #ff5733;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Add remaining CSS styles here */
+        body.light-mode {
+            background: linear-gradient(135deg, #667eea, #764ba2, #ff5733);
+            color: #333;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c, #444);
+            color: #f0f0f0;
+        }
+
+        .social-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .github { background: #24292f; }
+        .twitter { background: #1da1f2; }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .gradient-controls {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .gradient-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body class="light-mode">
     <div class="particles"></div>
@@ -44,6 +221,122 @@
         <p>We use cookies to remember your preferences. <button id="accept-cookies">Accept</button></p>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // JavaScript
+        const body = document.body;
+        const lightModeBtn = document.getElementById('light-mode-btn');
+        const darkModeBtn = document.getElementById('dark-mode-btn');
+        const cookiesConsentBanner = document.getElementById('cookies-consent');
+
+        // Theme Management
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            applyStoredTheme();
+            cookiesConsentBanner.style.display = 'none';
+        }
+
+        function applyStoredTheme() {
+            const storedTheme = localStorage.getItem('theme') || 'light';
+            body.className = `${storedTheme}-mode`;
+        }
+
+        function handleThemeToggle(theme, button) {
+            button.classList.add('active');
+            setTimeout(() => button.classList.remove('active'), 600);
+            if (localStorage.getItem('cookiesAccepted') === 'true') {
+                localStorage.setItem('theme', theme);
+            }
+        }
+
+        lightModeBtn.addEventListener('click', () => {
+            body.classList.replace('dark-mode', 'light-mode');
+            handleThemeToggle('light', lightModeBtn);
+        });
+
+        darkModeBtn.addEventListener('click', () => {
+            body.classList.replace('light-mode', 'dark-mode');
+            handleThemeToggle('dark', darkModeBtn);
+        });
+
+        // Particles
+        function createParticles() {
+            const container = document.querySelector('.particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 100;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 5 + 2;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 5 + 5;
+                const delay = Math.random() * -20;
+
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+        window.addEventListener('resize', () => {
+            document.querySelector('.particles').innerHTML = '';
+            createParticles();
+        });
+
+        // Cookie Consent
+        document.getElementById('accept-cookies').addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsentBanner.style.display = 'none';
+        });
+
+        // IP & Weather
+        fetch('https://ipinfo.io/json?token=5aa1a8d7027de0')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = data.ip;
+                document.getElementById('city').textContent = `${data.city}, ${data.country}`;
+                const [lat, lon] = data.loc.split(',');
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                    .then(res => res.json())
+                    .then(weather => {
+                        document.getElementById('weather').textContent = `${weather.current_weather.temperature}°C`;
+                    });
+            });
+
+        // Clock
+        function updateClock() {
+            document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Gradient Controls
+        document.querySelectorAll('.gradient-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                body.style.background = btn.style.background;
+                if (localStorage.getItem('cookiesAccepted') === 'true') {
+                    localStorage.setItem('customGradient', btn.style.background);
+                }
+            });
+        });
+
+        // Load Custom Gradient
+        if (localStorage.getItem('customGradient')) {
+            body.style.background = localStorage.getItem('customGradient');
+        }
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            document.querySelector('.container').style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+        });
+    </script>
 </body>
 </html>
