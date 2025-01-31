@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Site</title>
-    <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome Icons -->
+    <title>Enhanced Portfolio Site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="light-mode">
-    <!-- Theme Toggle Buttons -->
+    <div class="particles"></div>
+    
     <div class="theme-buttons">
         <div id="light-mode-btn" class="theme-toggle sun"><i class="fas fa-sun"></i></div>
         <div id="dark-mode-btn" class="theme-toggle moon"><i class="fas fa-moon"></i></div>
     </div>
 
-
-    div class="particles"></div>
-    
     <div class="advanced-options">
         <div class="gradient-controls">
             <div class="gradient-btn" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"></div>
             <div class="gradient-btn" style="background: linear-gradient(45deg, #6b48ff, #8aff7a)"></div>
             <div class="gradient-btn" style="background: linear-gradient(45deg, #ff8a00, #ff0080)"></div>
         </div>
-        
+    </div>
+
     <div class="container">
         <h1>Welcome to My Site</h1>
         <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
@@ -31,149 +30,20 @@
         <p>Weather in <span id="city">Your City</span>: <span id="weather">Loading...</span></p>
     </div>
 
-    <!-- Social Media Buttons -->
     <div class="social-btns">
         <a href="https://discord.com" class="social-btn" target="_blank"><i class="fab fa-discord"></i></a>
         <a href="https://github.com" class="social-btn github" target="_blank"><i class="fab fa-github"></i></a>
         <a href="https://twitter.com" class="social-btn twitter" target="_blank"><i class="fab fa-twitter"></i></a>
     </div>
 
-    <a href="https://fakecrime.bio/zanzyt" class="redirect-btn" target="_blank">Visit Fake Crime Bio</a>
+    <a href="https://fakecrime.bio/zanzyt" class="redirect-btn" target="_blank">Visit My Bio</a>
 
-    <!-- Footer -->
-    <div class="footer">Made by zanzyt corp.. </div>
+    <div class="footer">Made by zanzyt corp.</div>
 
-    <!-- Cookie Consent Banner -->
     <div id="cookies-consent" class="cookies-consent">
         <p>We use cookies to remember your preferences. <button id="accept-cookies">Accept</button></p>
     </div>
 
-    <script>
-        // JavaScript code from your provided script
-        // Check for the user's stored theme in localStorage and apply it
-        const body = document.body;
-        const lightModeBtn = document.getElementById('light-mode-btn');
-        const darkModeBtn = document.getElementById('dark-mode-btn');
-        const cookiesConsentBanner = document.getElementById('cookies-consent');
-
-        // Check if the user has accepted cookies
-        if (localStorage.getItem('cookiesAccepted') === 'true') {
-            // Apply the theme from localStorage
-            const storedTheme = localStorage.getItem('theme');
-            if (storedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                body.classList.remove('light-mode');
-            } else {
-                body.classList.add('light-mode');
-                body.classList.remove('dark-mode');
-            }
-        }
-
-        // Theme Toggle Event Listeners
-        lightModeBtn.addEventListener('click', () => {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-            handleThemeToggle('light', lightModeBtn);
-        });
-
-        darkModeBtn.addEventListener('click', () => {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-            handleThemeToggle('dark', darkModeBtn);
-        });
-
-        // Cookie consent handling
-        const acceptCookiesBtn = document.getElementById('accept-cookies');
-        acceptCookiesBtn.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookiesConsentBanner.style.display = 'none';  // Hide the cookies banner
-        });
-
-        // Fetch IP Address and Location using ipinfo.io
-        fetch('https://ipinfo.io/79.161.38.185?token=5aa1a8d7027de0')  // <-- Replace with your IPInfo token
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ip-address').textContent = data.ip; // Display IP
-                const location = data.city ? `${data.city}, ${data.country}` : "Unknown Location";
-                document.getElementById('city').textContent = location;
-
-                // Extract Latitude and Longitude from "loc" (formatted as "lat,lon")
-                const [latitude, longitude] = data.loc.split(',');
-
-                // Fetch Weather for the user's location
-                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
-                    .then(response => response.json())
-                    .then(weatherData => {
-                        const currentTemp = weatherData.current_weather.temperature;
-                        document.getElementById('weather').textContent = `${currentTemp}°C`;
-                    })
-                    .catch(() => {
-                        document.getElementById('weather').textContent = 'Unable to fetch weather';
-                    });
-            })
-            .catch(() => {
-                document.getElementById('ip-address').textContent = 'Unable to fetch IP';
-                document.getElementById('city').textContent = 'Unknown Location';
-                document.getElementById('weather').textContent = 'Unknown Weather';
-            });
-
-        // Dynamic Clock
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString();
-        }
-
-        setInterval(updateClock, 1000);
-        updateClock();
-
-         function handleThemeToggle(theme, button) {
-            button.classList.add('active');
-            setTimeout(() => button.classList.remove('active'), 500);
-            
-            if (cookiesConsentBanner.style.display !== 'none') {
-                localStorage.setItem('theme', theme);
-            }
-        }
-
-        // Particle Animation
-        function createParticles() {
-            const particles = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.width = particle.style.height = `${Math.random() * 5 + 2}px`;
-                particle.style.animation = `floatParticle ${Math.random() * 5 + 5}s infinite`;
-                particles.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Gradient Controls
-        document.querySelectorAll('.gradient-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const gradient = btn.style.background;
-                body.style.background = gradient;
-                if (cookiesConsentBanner.style.display !== 'none') {
-                    localStorage.setItem('customGradient', gradient);
-                }
-            });
-        });
-
-        // Load Custom Gradient
-        if (localStorage.getItem('customGradient')) {
-            body.style.background = localStorage.getItem('customGradient');
-        }
-
-        // Add parallax effect
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            document.querySelector('.container').style.transform = `
-                translate(${x}px, ${y}px)
-                scale(1.05)
-            `;
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
