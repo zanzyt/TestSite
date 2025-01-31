@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Portfolio</title>
+    <title>Advanced Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* CSS */
@@ -83,6 +83,7 @@
 
         .sun { background: #ffeb3b; }
         .moon { background: #333; }
+        .reset-theme { background: #666; }
 
         .container {
             background: rgba(255, 255, 255, 0.1);
@@ -91,10 +92,16 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             text-align: center;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
             max-width: 400px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-origin: center;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .cookies-consent {
@@ -127,17 +134,6 @@
             font-size: 1.2em;
             margin-top: 20px;
             transition: all 0.3s ease;
-        }
-
-        /* Add remaining CSS styles here */
-        body.light-mode {
-            background: linear-gradient(135deg, #667eea, #764ba2, #ff5733);
-            color: #333;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a1a, #2c2c2c, #444);
-            color: #f0f0f0;
         }
 
         .social-btn {
@@ -182,6 +178,16 @@
             border: 2px solid white;
             transition: transform 0.3s ease;
         }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #667eea, #764ba2, #ff5733);
+            color: #333;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c, #444);
+            color: #f0f0f0;
+        }
     </style>
 </head>
 <body class="light-mode">
@@ -190,6 +196,7 @@
     <div class="theme-buttons">
         <div id="light-mode-btn" class="theme-toggle sun"><i class="fas fa-sun"></i></div>
         <div id="dark-mode-btn" class="theme-toggle moon"><i class="fas fa-moon"></i></div>
+        <div id="reset-theme-btn" class="theme-toggle reset-theme"><i class="fas fa-undo"></i></div>
     </div>
 
     <div class="advanced-options">
@@ -221,22 +228,24 @@
         <p>We use cookies to remember your preferences. <button id="accept-cookies">Accept</button></p>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         // JavaScript
         const body = document.body;
         const lightModeBtn = document.getElementById('light-mode-btn');
         const darkModeBtn = document.getElementById('dark-mode-btn');
+        const resetThemeBtn = document.getElementById('reset-theme-btn');
         const cookiesConsentBanner = document.getElementById('cookies-consent');
 
         // Theme Management
-        if (localStorage.getItem('cookiesAccepted') === 'true') {
-            applyStoredTheme();
-            cookiesConsentBanner.style.display = 'none';
-        }
-
         function applyStoredTheme() {
             const storedTheme = localStorage.getItem('theme') || 'light';
             body.className = `${storedTheme}-mode`;
+        }
+
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            applyStoredTheme();
+            cookiesConsentBanner.style.display = 'none';
         }
 
         function handleThemeToggle(theme, button) {
@@ -256,6 +265,16 @@
             body.classList.replace('light-mode', 'dark-mode');
             handleThemeToggle('dark', darkModeBtn);
         });
+
+        // Theme Reset
+        function resetToDefaultTheme() {
+            body.style.background = '';
+            localStorage.removeItem('customGradient');
+            applyStoredTheme();
+            resetThemeBtn.classList.add('active');
+            setTimeout(() => resetThemeBtn.classList.remove('active'), 600);
+        }
+        resetThemeBtn.addEventListener('click', resetToDefaultTheme);
 
         // Particles
         function createParticles() {
@@ -282,7 +301,6 @@
                 container.appendChild(particle);
             }
         }
-
         createParticles();
         window.addEventListener('resize', () => {
             document.querySelector('.particles').innerHTML = '';
@@ -331,11 +349,42 @@
             body.style.background = localStorage.getItem('customGradient');
         }
 
-        // Parallax Effect
+        // Advanced Container Animation
+        let isHovering = false;
+        const container = document.querySelector('.container');
+
+        container.addEventListener('mouseenter', () => {
+            isHovering = true;
+            gsap.to(container, { scale: 1.05, duration: 0.3 });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isHovering = false;
+            gsap.to(container, {
+                scale: 1,
+                rotateX: 0,
+                rotateY: 0,
+                translateZ: 0,
+                duration: 0.5
+            });
+        });
+
         document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            document.querySelector('.container').style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+            if (!isHovering) return;
+
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width/2;
+            const centerY = rect.top + rect.height/2;
+            
+            const rotateX = -(e.clientY - centerY) / 15;
+            const rotateY = (e.clientX - centerX) / 15;
+
+            gsap.to(container, {
+                duration: 0.3,
+                rotateX: rotateX,
+                rotateY: rotateY,
+                translateZ: 20
+            });
         });
     </script>
 </body>
