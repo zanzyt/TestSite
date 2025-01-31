@@ -1,4 +1,4 @@
-/* General Styles */
+/* Base Styles */
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
@@ -8,22 +8,86 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    transition: background 0.5s ease, color 0.5s ease, transform 0.5s ease;
+    transition: all 0.5s ease;
     overflow: hidden;
 }
 
-/* Light Mode */
+/* Theme Modes */
 body.light-mode {
     background: linear-gradient(135deg, #667eea, #764ba2, #ff5733);
     color: #333;
 }
 
-/* Dark Mode */
 body.dark-mode {
     background: linear-gradient(135deg, #1a1a1a, #2c2c2c, #444);
     color: #f0f0f0;
 }
 
+/* Particles */
+.particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+    filter: blur(1px);
+}
+
+body.light-mode .particle {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes floatParticle {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh) translateX(100vw); opacity: 0; }
+}
+
+/* Theme Buttons */
+.theme-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle.active i {
+    animation: themeToggleAnimation 0.6s ease;
+}
+
+@keyframes themeToggleAnimation {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+}
+
+.sun { background: #ffeb3b; }
+.moon { background: #333; }
 /* Cookie Consent Banner */
 .cookies-consent {
     position: fixed;
@@ -182,19 +246,6 @@ p {
 .theme-toggle:hover {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-}
-
-/* Sun and Moon Styling */
-.sun {
-    background: #ffeb3b;
-    box-shadow: 0 0 20px #ffeb3b, 0 0 40px #ffeb3b;
-    animation: glow 2s infinite alternate;
-}
-
-.moon {
-    background: #333;
-    box-shadow: inset -8px -8px 0px rgba(255, 255, 255, 0.2);
-    animation: glow 2s infinite alternate;
 }
 
 /* Social Media Buttons */
