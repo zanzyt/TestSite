@@ -14,6 +14,16 @@
         <div id="dark-mode-btn" class="theme-toggle moon"><i class="fas fa-moon"></i></div>
     </div>
 
+
+    div class="particles"></div>
+    
+    <div class="advanced-options">
+        <div class="gradient-controls">
+            <div class="gradient-btn" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"></div>
+            <div class="gradient-btn" style="background: linear-gradient(45deg, #6b48ff, #8aff7a)"></div>
+            <div class="gradient-btn" style="background: linear-gradient(45deg, #ff8a00, #ff0080)"></div>
+        </div>
+        
     <div class="container">
         <h1>Welcome to My Site</h1>
         <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
@@ -63,17 +73,13 @@
         lightModeBtn.addEventListener('click', () => {
             body.classList.remove('dark-mode');
             body.classList.add('light-mode');
-            if (cookiesConsentBanner.style.display !== 'none') {
-                localStorage.setItem('theme', 'light');
-            }
+            handleThemeToggle('light', lightModeBtn);
         });
 
         darkModeBtn.addEventListener('click', () => {
             body.classList.remove('light-mode');
             body.classList.add('dark-mode');
-            if (cookiesConsentBanner.style.display !== 'none') {
-                localStorage.setItem('theme', 'dark');
-            }
+            handleThemeToggle('dark', darkModeBtn);
         });
 
         // Cookie consent handling
@@ -119,6 +125,55 @@
 
         setInterval(updateClock, 1000);
         updateClock();
+
+         function handleThemeToggle(theme, button) {
+            button.classList.add('active');
+            setTimeout(() => button.classList.remove('active'), 500);
+            
+            if (cookiesConsentBanner.style.display !== 'none') {
+                localStorage.setItem('theme', theme);
+            }
+        }
+
+        // Particle Animation
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.width = particle.style.height = `${Math.random() * 5 + 2}px`;
+                particle.style.animation = `floatParticle ${Math.random() * 5 + 5}s infinite`;
+                particles.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Gradient Controls
+        document.querySelectorAll('.gradient-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const gradient = btn.style.background;
+                body.style.background = gradient;
+                if (cookiesConsentBanner.style.display !== 'none') {
+                    localStorage.setItem('customGradient', gradient);
+                }
+            });
+        });
+
+        // Load Custom Gradient
+        if (localStorage.getItem('customGradient')) {
+            body.style.background = localStorage.getItem('customGradient');
+        }
+
+        // Add parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            document.querySelector('.container').style.transform = `
+                translate(${x}px, ${y}px)
+                scale(1.05)
+            `;
+        });
     </script>
 </body>
 </html>
