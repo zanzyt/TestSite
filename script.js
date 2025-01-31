@@ -42,7 +42,7 @@ acceptCookiesBtn.addEventListener('click', () => {
 });
 
 // Fetch IP Address and Location using ipinfo.io
-fetch('https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN')  // <-- Replace with your IPInfo token
+fetch('ipinfo.io/79.161.38.185?token=5aa1a8d7027de0"')  // <-- Replace with your IPInfo token
     .then(response => response.json())
     .then(data => {
         document.getElementById('ip-address').textContent = data.ip; // Display IP
